@@ -14,8 +14,8 @@ class Item {
 
 class TelemetryModel extends ChangeNotifier {
   final List<Item> _items = [];
-  late TelemetryMetric telemetryMetric;
-  late Settings settings;
+  TelemetryMetric telemetryMetric = TelemetryMetric.dummy();
+  Settings settings = Settings.dummy();
   late BoatConnector store;
 
   TelemetryModel() {

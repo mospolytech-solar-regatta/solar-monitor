@@ -9,6 +9,11 @@ class BoatConnector {
   var settingsEndpoint = '';
   final jsonHeaders = const {
     'content-type': 'application/json',
+    "Access-Control-Allow-Origin": "*"
+  };
+
+  final webHeaders = const {
+    "Access-Control-Allow-Origin": "*"
   };
 
   BoatConnector() {
@@ -18,7 +23,7 @@ class BoatConnector {
   }
 
   Future<TelemetryMetric> getLatestTelemetry() async {
-    var resp = await http.get(Uri.parse(url + currentStateEndpoint));
+    var resp = await http.get(Uri.parse(url + currentStateEndpoint), headers: webHeaders);
     if (resp.statusCode == 200) {
       return TelemetryMetric.fromJson(jsonDecode(resp.body));
     } else {
@@ -27,7 +32,7 @@ class BoatConnector {
   }
 
   Future<Settings> getSettings() async {
-    var resp = await http.get(Uri.parse(url + settingsEndpoint));
+    var resp = await http.get(Uri.parse(url + settingsEndpoint), headers: webHeaders);
     if (resp.statusCode == 200) {
       return Settings.fromJson(jsonDecode(resp.body));
     } else {
@@ -39,9 +44,7 @@ class BoatConnector {
     var body = settings.toJson();
     print(body);
     var resp = await http.post(Uri.parse(url + settingsEndpoint),
-        headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    }, body: jsonEncode(body));
+        headers: jsonHeaders, body: jsonEncode(body));
     if (resp.statusCode == 200) {
       return Settings.fromJson(jsonDecode(resp.body));
     } else {
