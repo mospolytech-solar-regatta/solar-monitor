@@ -68,15 +68,15 @@ class MyHomePage extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: TelemetryWidget('Мотор', const ['motor_temp']),
+                  child: TelemetryWidget('Мотор', [TelemetryProperty(Icons.thermostat, 'motor_temp')]),
                 ),
                 Expanded(
                   child: TelemetryWidget(
-                      'MPPT', const ['MPPT_volts', 'MPPT_watts']),
+                      'MPPT', [TelemetryProperty(Icons.bolt, 'MPPT_volts'),TelemetryProperty(Icons.power, 'MPPT_volts')]),
                 ),
                 Expanded(
                   child: TelemetryWidget('Контроллер',
-                      const ['controller_volts', 'controller_watts']),
+                      [TelemetryProperty(Icons.bolt, 'controller_volts'),TelemetryProperty(Icons.power, 'controller_volts')]),
                 ),
               ],
             ),
@@ -85,15 +85,15 @@ class MyHomePage extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: TelemetryWidget('Мотор', const ['motor_temp']),
+                  child: TelemetryWidget('Empty', []),
                 ),
                 Expanded(
                   child: TelemetryWidget(
-                      'MPPT', const ['MPPT_volts', 'MPPT_watts']),
+                      'Empty', []),
                 ),
                 Expanded(
-                  child: TelemetryWidget('Контроллер',
-                      const ['controller_volts', 'controller_watts']),
+                  child: TelemetryWidget('Empty',
+                      const []),
                 ),
               ],
             ),

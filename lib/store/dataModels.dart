@@ -50,6 +50,10 @@ class TelemetryMetric {
       _$TelemetryMetricFromJson(json);
 
   Map<String, dynamic> toJson() => _$TelemetryMetricToJson(this);
+
+  static TelemetryMetric dummy() {
+    return TelemetryMetric(DateTime(0), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+  }
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake)
@@ -63,4 +67,7 @@ class Settings {
       _$SettingsFromJson(json);
 
   Map<String, dynamic> toJson() => _$SettingsToJson(this);
+  static Settings dummy() {
+    return Settings('', 0);
+  }
 }

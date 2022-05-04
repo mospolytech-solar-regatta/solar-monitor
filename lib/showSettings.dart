@@ -60,18 +60,32 @@ class _ShowSettingsState extends State<ShowSettingsWidget> {
                             ],
                           )),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SettingsWidget()),
-                        );
-                      },
-                      child: const Text('Update'),
-                    ),
-                  ),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Consumer<TelemetryModel>(
+                              builder: (context, model, child) =>
+                                  ElevatedButton(
+                                onPressed: () {
+                                  model.getSettings();
+                                },
+                                child: const Text('Update'),
+                              ),
+                            ),
+                            const SizedBox(width: 5),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SettingsWidget()),
+                                );
+                              },
+                              child: const Text('Edit'),
+                            ),
+                          ])),
                 ],
               )),
         ),
