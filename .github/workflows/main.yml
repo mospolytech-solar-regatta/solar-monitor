@@ -29,5 +29,5 @@ jobs:
      - run: flutter build linux
      - uses: actions/upload-artifact@v3
        with:
-         name: code-coverage-report
+         name: linux-build
          path: build/linux
