@@ -17,8 +17,8 @@ TelemetryMetric _$TelemetryMetricFromJson(Map<String, dynamic> json) =>
       (json['MPPT_volts'] as num).toDouble(),
       (json['MPPT_watts'] as num).toDouble(),
       (json['distance_travelled'] as num).toDouble(),
-      (json['lap_point_lat'] as num).toDouble(),
-      (json['lap_point_lng'] as num).toDouble(),
+      (json['lap_point_lat'] as num?)?.toDouble(),
+      (json['lap_point_lng'] as num?)?.toDouble(),
       json['laps'] as int,
       (json['position_lat'] as num).toDouble(),
       (json['position_lng'] as num).toDouble(),
@@ -45,11 +45,11 @@ Map<String, dynamic> _$TelemetryMetricToJson(TelemetryMetric instance) =>
     };
 
 Settings _$SettingsFromJson(Map<String, dynamic> json) => Settings(
-      json['name'] as String,
-      json['rate'] as int,
+      json['serial_port'] as String,
+      json['serial_rate'] as int,
     );
 
 Map<String, dynamic> _$SettingsToJson(Settings instance) => <String, dynamic>{
-      'name': instance.name,
-      'rate': instance.rate,
+      'serial_port': instance.serialPort,
+      'serial_rate': instance.serialRate,
     };

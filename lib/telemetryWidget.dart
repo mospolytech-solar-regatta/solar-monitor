@@ -47,10 +47,14 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                     itemCount: widget.properties.length,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
+                        dense: true,
+                        visualDensity: VisualDensity(vertical: -3),
                         leading: widget.properties[index].icon,
                         title: Text(
-                            '${telemetry.getProp(widget.properties[index].propName)}'),
-                        subtitle: Text(widget.properties[index].propName),
+                            '${telemetry.getProp(widget.properties[index].propName)}',
+                            style: const TextStyle(fontSize: 13)),
+                        subtitle: Text(widget.properties[index].propName,
+                            style: const TextStyle(fontSize: 13)),
                       );
                     }))
           ],

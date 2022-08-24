@@ -19,13 +19,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-
           ChangeNotifierProvider(create: (context) => TelemetryModel()),
         ],
         child: MaterialApp(
           title: 'Solar Monitor',
           theme: ThemeData(
-
             primarySwatch: Colors.blue,
           ),
           home: const MyHomePage(title: 'Solar monitor'),
@@ -50,7 +48,8 @@ class MyHomePage extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ShowSettingsWidget()),
+                    MaterialPageRoute(
+                        builder: (context) => const ShowSettingsWidget()),
                   );
                 },
                 child: const Icon(
@@ -68,15 +67,24 @@ class MyHomePage extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: TelemetryWidget('Мотор', [TelemetryProperty(Icons.thermostat, 'motor_temp')]),
+                  child: TelemetryWidget('Мотор', [
+                    TelemetryProperty(Icons.thermostat, 'motor_temp'),
+                    TelemetryProperty(
+                        Icons.settings_backup_restore, 'motor_revols')
+                  ]),
                 ),
                 Expanded(
-                  child: TelemetryWidget(
-                      'MPPT', [TelemetryProperty(Icons.bolt, 'MPPT_volts'),TelemetryProperty(Icons.power, 'MPPT_volts')]),
+                  child: TelemetryWidget('MPPT', [
+                    TelemetryProperty(Icons.bolt, 'MPPT_volts'),
+                    TelemetryProperty(Icons.power, 'MPPT_volts'),
+                    TelemetryProperty(Icons.battery_std, 'time_to_go')
+                  ]),
                 ),
                 Expanded(
-                  child: TelemetryWidget('Контроллер',
-                      [TelemetryProperty(Icons.bolt, 'controller_volts'),TelemetryProperty(Icons.power, 'controller_volts')]),
+                  child: TelemetryWidget('Контроллер', [
+                    TelemetryProperty(Icons.bolt, 'controller_volts'),
+                    TelemetryProperty(Icons.power, 'controller_volts')
+                  ]),
                 ),
               ],
             ),
@@ -85,15 +93,22 @@ class MyHomePage extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: TelemetryWidget('Empty', []),
+                  child: TelemetryWidget('GPS', [
+                    TelemetryProperty(Icons.gps_fixed, 'position_lat'),
+                    TelemetryProperty(Icons.gps_fixed, 'position_lng'),
+                    TelemetryProperty(Icons.share_location, 'lap_point_lat'),
+                    TelemetryProperty(Icons.share_location, 'lap_point_lng'),
+                  ]),
                 ),
                 Expanded(
-                  child: TelemetryWidget(
-                      'Empty', []),
+                  child: TelemetryWidget('Параметры', [
+                    TelemetryProperty(Icons.speed, 'speed'),
+                    TelemetryProperty(
+                        Icons.social_distance, 'distance_travelled')
+                  ]),
                 ),
                 Expanded(
-                  child: TelemetryWidget('Empty',
-                      const []),
+                  child: TelemetryWidget('Empty', const []),
                 ),
               ],
             ),

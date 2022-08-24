@@ -18,8 +18,8 @@ class BoatConnector {
 
   BoatConnector() {
     url = 'http://localhost:8000';
-    currentStateEndpoint = '/current_state/';
-    settingsEndpoint = '/serial_config/';
+    currentStateEndpoint = '/state/';
+    settingsEndpoint = '/serial/config/';
   }
 
   Future<TelemetryMetric> getLatestTelemetry() async {

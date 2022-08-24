@@ -21,8 +21,12 @@ class TelemetryMetric {
   double positionLng;
   double distanceTravelled;
   int laps;
-  double lapPointLng;
-  double lapPointLat;
+
+  @JsonKey(required: false)
+  double? lapPointLng;
+
+  @JsonKey(required: false)
+  double? lapPointLat;
 
   TelemetryMetric(
       this.createdAt,
@@ -58,10 +62,10 @@ class TelemetryMetric {
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Settings {
-  String name;
-  int rate;
+  String serialPort;
+  int serialRate;
 
-  Settings(this.name, this.rate);
+  Settings(this.serialPort, this.serialRate);
 
   factory Settings.fromJson(Map<String, dynamic> json) =>
       _$SettingsFromJson(json);
