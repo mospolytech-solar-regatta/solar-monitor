@@ -39,7 +39,7 @@ jobs:
      - uses: pguyot/arm-runner-action@v2
        id: build_image
        with:
-        base_image: raspi_4_bullseye:20220121
+        base_image: raspios_lite_arm64:2022-01-28
         commands: |
             apt-get update -y
             apt-get install -y git curl zip unzip xz-utils
