@@ -42,10 +42,9 @@ jobs:
         base_image: raspi_4_bullseye:20220121
         commands: |
             apt-get update -y
-            apt-get install -y git
+            apt-get install -y git curl zip unzip xz-utils
             git clone https://github.com/flutter/flutter.git -b stable /flutter
             export PATH="$PATH:/flutter/bin"
-            apt-get install -y curl ninja-build libgtk-3-dev
             flutter precache
             flutter config --enable-linux-desktop
             flutter build linux
