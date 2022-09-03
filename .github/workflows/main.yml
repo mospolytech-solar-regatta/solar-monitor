@@ -41,8 +41,8 @@ jobs:
        with:
         base_image: raspi_4_bullseye:20220121
         commands: |
-            sudo apt-get update -y
-            sudo apt-get install -y git
+            apt-get update -y
+            apt-get install -y git
             git clone https://github.com/flutter/flutter.git -b stable /flutter
             ls
             ls /
