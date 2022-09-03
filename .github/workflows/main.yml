@@ -45,7 +45,6 @@ jobs:
             apt-get install -y git curl zip unzip xz-utils
             git clone https://github.com/flutter/flutter.git -b stable /flutter
             export PATH="$PATH:/flutter/bin"
-            flutter precache
             flutter config --enable-linux-desktop
             flutter build linux
      - uses: actions/upload-artifact@v3
