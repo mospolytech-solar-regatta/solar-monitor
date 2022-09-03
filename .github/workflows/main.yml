@@ -36,15 +36,14 @@ jobs:
    runs-on: ubuntu-latest
    steps:
      - uses: actions/checkout@v3
-     - run: |
-        sudo apt-get update -y
-        sudo apt-get install -y git
-        git clone https://github.com/flutter/flutter.git -b stable /tmp/flutter
      - uses: pguyot/arm-runner-action@v2
        id: build_image
        with:
         base_image: raspi_4_bullseye:20220121
         commands: |
+            sudo apt-get update -y
+            sudo apt-get install -y git
+            git clone https://github.com/flutter/flutter.git -b stable /flutter
             ls
             ls /
             ls /flutter
