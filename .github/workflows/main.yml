@@ -39,6 +39,7 @@ jobs:
      - uses: subosito/flutter-action@v2
        with:
          architecture: arm64
+     - run: /usr/sbin/softwareupdate --install-rosetta --agree-to-license
      - run: flutter config --enable-linux-desktop
      - run: flutter build linux
      - uses: actions/upload-artifact@v3
