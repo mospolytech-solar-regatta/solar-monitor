@@ -35,7 +35,9 @@ jobs:
             flutter build linux
       - run:
           name: "zip artifact"
-          command: zip -r build_arm64.zip build/linux/arm64/release
+          command: |
+            mv build/linux/arm64/release release_build
+            zip -r build_arm64.zip release_build
       - store_artifacts:
           path: build_arm64.zip
           destination: linux-build-arm64
