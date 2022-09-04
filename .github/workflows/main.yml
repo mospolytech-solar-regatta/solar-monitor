@@ -31,23 +31,3 @@ jobs:
        with:
          name: linux-build-x64
          path: build/linux
-
- build_arm:
-   runs-on: ubuntu-latest
-   steps:
-     - uses: actions/checkout@v3
-     - uses: pguyot/arm-runner-action@v2
-       id: build_image
-       with:
-        base_image: raspios_lite_arm64:2022-01-28
-        commands: |
-            apt-get update -y
-            apt-get install -y git curl zip unzip xz-utils
-            git clone https://github.com/flutter/flutter.git -b stable /flutter
-            export PATH="$PATH:/flutter/bin"
-            flutter config --enable-linux-desktop
-            flutter build linux
-     - uses: actions/upload-artifact@v3
-       with:
-         name: linux-build-arm
-         path: build/linux
