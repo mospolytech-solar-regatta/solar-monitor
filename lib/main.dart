@@ -6,8 +6,26 @@ import 'package:solar_monitor/settings.dart';
 import 'package:solar_monitor/showSettings.dart';
 import 'models/telemetry.dart';
 import 'telemetryWidget.dart';
+import 'package:window_manager/window_manager.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Must add this line.
+  await windowManager.ensureInitialized();
+
+  WindowOptions windowOptions = WindowOptions(
+    size: Size(800, 600),
+    center: true,
+    backgroundColor: Colors.transparent,
+    skipTaskbar: false,
+    titleBarStyle: TitleBarStyle.hidden,
+  );
+
+  windowManager.waitUntilReadyToShow(windowOptions, () async {
+    await windowManager.show();
+    await windowManager.setFullScreen(true);
+    await windowManager.focus();
+  });
   runApp(const MyApp());
 }
 
