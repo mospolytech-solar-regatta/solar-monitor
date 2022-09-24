@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Solar Monitor
+Comment=Monitor for mospolytech solar regatta
+Exec=solar-monitor
+Icon=${SNAP}/meta/gui/solar-monitor.png
+Terminal=false
+Type=Application
+Categories=Education;
