@@ -7,20 +7,13 @@ confinement: strict
 base: core18
 grade: stable
 
-slots:
-  dbus-solar-monitor: # adjust accordingly to your app name
-    interface: dbus
-    bus: session
-    name: ru.mospolytech.solar.solar-monitor # adjust accordingly to your app name and
-
 apps:
   solar-monitor:
     command: solar_monitor
     extensions: [flutter-master] # Where "master" defines which Flutter channel to use for the build
     plugs:
       - network
-    slots:
-      - dbus-solar-monitor
+
 parts:
   solar-monitor:
     source: .
