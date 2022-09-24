@@ -56,22 +56,29 @@ class TelemetryMetric {
   Map<String, dynamic> toJson() => _$TelemetryMetricToJson(this);
 
   static TelemetryMetric dummy() {
-    return TelemetryMetric(DateTime(0), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    return TelemetryMetric(
+        DateTime(0), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
   }
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Settings {
-  String serialPort;
-  int serialRate;
+  String port;
+  int baudrate;
+  int bytesize;
+  String parity;
+  int stopbits;
+  int timeout;
 
-  Settings(this.serialPort, this.serialRate);
+  Settings(this.port, this.baudrate, [this.bytesize=8, this.parity='N', this.stopbits=1,
+      this.timeout=0]);
 
   factory Settings.fromJson(Map<String, dynamic> json) =>
       _$SettingsFromJson(json);
 
   Map<String, dynamic> toJson() => _$SettingsToJson(this);
+
   static Settings dummy() {
-    return Settings('', 0);
+    return Settings('', 0, 0, 'N', 0, 0);
   }
 }

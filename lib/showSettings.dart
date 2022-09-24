@@ -47,14 +47,14 @@ class _ShowSettingsState extends State<ShowSettingsWidget> {
                               DataRow(
                                 cells: <DataCell>[
                                   const DataCell(Text('Port name')),
-                                  DataCell(Text(model.settings.serialPort)),
+                                  DataCell(Text(model.settings.port)),
                                 ],
                               ),
                               DataRow(
                                 cells: <DataCell>[
                                   const DataCell(Text('Port rate')),
                                   DataCell(
-                                      Text(model.settings.serialRate.toString())),
+                                      Text(model.settings.baudrate.toString())),
                                 ],
                               ),
                             ],

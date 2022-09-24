@@ -19,8 +19,8 @@ class _SettingsState extends State<SettingsWidget> {
   @override
   Widget build(BuildContext context) {
     return Consumer<TelemetryModel>(builder: (context, model, child) {
-      rateController.text = model.settings.serialRate.toString();
-      nameController.text = model.settings.serialPort.toString();
+      rateController.text = model.settings.baudrate.toString();
+      nameController.text = model.settings.port.toString();
       return Scaffold(
         appBar: AppBar(
           title: const Text('Monitor settings'),

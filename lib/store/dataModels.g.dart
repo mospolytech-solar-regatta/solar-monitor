@@ -45,11 +45,19 @@ Map<String, dynamic> _$TelemetryMetricToJson(TelemetryMetric instance) =>
     };
 
 Settings _$SettingsFromJson(Map<String, dynamic> json) => Settings(
-      json['serial_port'] as String,
-      json['serial_rate'] as int,
+      json['port'] as String,
+      json['baudrate'] as int,
+      json['bytesize'] as int? ?? 8,
+      json['parity'] as String? ?? 'N',
+      json['stopbits'] as int? ?? 1,
+      json['timeout'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$SettingsToJson(Settings instance) => <String, dynamic>{
-      'serial_port': instance.serialPort,
-      'serial_rate': instance.serialRate,
+      'port': instance.port,
+      'baudrate': instance.baudrate,
+      'bytesize': instance.bytesize,
+      'parity': instance.parity,
+      'stopbits': instance.stopbits,
+      'timeout': instance.timeout,
     };
