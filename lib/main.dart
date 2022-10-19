@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solar_monitor/settings.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:solar_monitor/showSettings.dart';
 import 'models/telemetry.dart';
 import 'telemetryWidget.dart';
@@ -14,16 +15,16 @@ void main() async {
   await windowManager.ensureInitialized();
 
   WindowOptions windowOptions = WindowOptions(
-    size: Size(800, 600),
-    center: true,
+    size: Size(1024, 600),
+    // center: true,
     backgroundColor: Colors.transparent,
     skipTaskbar: false,
-    titleBarStyle: TitleBarStyle.hidden,
+    // titleBarStyle: TitleBarStyle.hidden,
   );
 
   windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();
-    await windowManager.setFullScreen(true);
+    // await windowManager.setFullScreen(true);
     await windowManager.focus();
   });
   runApp(const MyApp());
@@ -39,13 +40,30 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (context) => TelemetryModel()),
         ],
-        child: MaterialApp(
-          title: 'Solar Monitor',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          home: const MyHomePage(title: 'Solar monitor'),
-        ));
+        child: ScreenUtilInit(
+            designSize: const Size(1024, 600),
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (context, child) {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'First Method',
+                // You can use the library anywhere in the app even in theme
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                  textTheme:
+                      Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
+                ),
+                home: child,
+              );
+            },
+            child: MaterialApp(
+              title: 'Solar Monitor',
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+              ),
+              home: const MyHomePage(title: 'Solar monitor'),
+            )));
   }
 }
 
@@ -120,6 +138,7 @@ class MyHomePage extends StatelessWidget {
                 ),
                 Expanded(
                   child: TelemetryWidget('Параметры', [
+                    TelemetryProperty(Icons.timer_outlined, 'created_at'),
                     TelemetryProperty(Icons.speed, 'speed'),
                     TelemetryProperty(
                         Icons.social_distance, 'distance_travelled')

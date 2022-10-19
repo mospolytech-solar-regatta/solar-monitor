@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'models/telemetry.dart';
 
@@ -28,14 +29,14 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints.expand(),
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(0),
       child: Card(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
               widget.widgetName,
-              style: const TextStyle(fontSize: 17),
+              style: TextStyle(fontSize: 15.sp),
             ),
             const Divider(
               thickness: 2,
@@ -43,18 +44,18 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
             Consumer<TelemetryModel>(
                 builder: (context, telemetry, child) => ListView.builder(
                     shrinkWrap: true,
-                    padding: const EdgeInsets.all(2),
+                    padding: const EdgeInsets.all(0),
                     itemCount: widget.properties.length,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
                         dense: true,
-                        visualDensity: VisualDensity(vertical: -3),
+                        visualDensity: VisualDensity(vertical: -4),
                         leading: widget.properties[index].icon,
                         title: Text(
                             '${telemetry.getProp(widget.properties[index].propName)}',
-                            style: const TextStyle(fontSize: 13)),
+                            style: TextStyle(fontSize: 12.sp)),
                         subtitle: Text(widget.properties[index].propName,
-                            style: const TextStyle(fontSize: 13)),
+                            style: TextStyle(fontSize: 12.sp)),
                       );
                     }))
           ],
