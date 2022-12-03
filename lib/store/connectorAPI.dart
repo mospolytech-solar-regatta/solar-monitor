@@ -2,10 +2,12 @@ import 'package:http/http.dart' as http;
 
 class ConnectorAPI{
   static var url ='http://localhost:8000';
-  static var reset_point = '/reset_point/';
-  static var reset_distance = '/reset_distance/';
-  static var start = '/start';
-  static var stop ='/stop';
+  static var reset_point = '/action/reset_point/';
+  static var reset_distance = '/action/reset_distance/';
+  static var lap_point = '/action/lap_point/';
+  static var start = '/race/start';
+  static var stop ='/race/stop';
+
   static const jsonHeaders = {
     'content-type': 'application/json',
     "Access-Control-Allow-Origin": "*"
@@ -31,6 +33,15 @@ class ConnectorAPI{
       print("ok");
     } else {
       throw Exception('Failed to resetDistance');
+    }
+  }
+
+  static setLapPoint() async{
+    var resp = await http.get(Uri.parse(url + lap_point), headers: webHeaders);
+    if (resp.statusCode == 200) {
+      print("ok");
+    } else {
+      throw Exception('Failed to setLapPoint');
     }
   }
 

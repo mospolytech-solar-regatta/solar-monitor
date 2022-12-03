@@ -179,13 +179,20 @@ class MyHomePage extends StatelessWidget {
                             child: const Text('Stop'),
                           ),
                         ],
+                      ),),
+                      Expanded(child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          ElevatedButton(
+                            style: null,
+                            onPressed: () => ConnectorAPI.setLapPoint(),
+                            child: const Text('setLapPoint'),
+                          ),
+                        ],
                       ),)
                     ],
-                  )
-                    
-
-
-                ),
+                  ),
+                 ),
               ],
             ),
           ),
