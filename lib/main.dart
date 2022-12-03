@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:solar_monitor/store/connectorAPI.dart';
 import 'package:solar_monitor/settings.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:solar_monitor/showSettings.dart';
@@ -145,7 +146,45 @@ class MyHomePage extends StatelessWidget {
                   ]),
                 ),
                 Expanded(
-                  child: TelemetryWidget('Empty', const []),
+                  child: Row(
+                    children: [
+                      Expanded(child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          ElevatedButton(
+                            style: null,
+                            onPressed: () => ConnectorAPI.resetPoint(),
+                            child: const Text('Reset point'),
+                          ),
+                          const SizedBox(height: 30),
+                          ElevatedButton(
+                            style: null,
+                            onPressed: () => ConnectorAPI.resetDistance(),
+                            child: const Text('Reset distance'),
+                          ),
+                        ],
+                      ),),
+                      Expanded(child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          ElevatedButton(
+                            style: null,
+                            onPressed: () => ConnectorAPI.startCompetition(),
+                            child: const Text('Start'),
+                          ),
+                          const SizedBox(height: 30),
+                          ElevatedButton(
+                            style: null,
+                            onPressed: () => ConnectorAPI.stopCompetition(),
+                            child: const Text('Stop'),
+                          ),
+                        ],
+                      ),)
+                    ],
+                  )
+                    
+
+
                 ),
               ],
             ),
