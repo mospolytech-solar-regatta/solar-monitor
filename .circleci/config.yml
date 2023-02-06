@@ -23,7 +23,7 @@ jobs:
       - run:
           name: "setup flutter"
           command: |
-            git clone https://github.com/flutter/flutter.git -b stable
+            git clone https://github.com/flutter/flutter.git -b beta
             export PATH="$PATH:`pwd`/flutter/bin"
             flutter config --enable-linux-desktop
             flutter precache --linux
