@@ -34,7 +34,7 @@ dependencies:
   http: ^0.13.5
   json_serializable: ^6.6.1
   window_manager: ^0.3.0
-  flutter_screenutil: ^5.5.4
+  flutter_screenutil: ^5.9.0
   build_runner:
   json_annotation:
 
