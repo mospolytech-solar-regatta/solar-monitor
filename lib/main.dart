@@ -15,17 +15,17 @@ void main() async {
   // Must add this line.
   await windowManager.ensureInitialized();
 
-  WindowOptions windowOptions = WindowOptions(
+  WindowOptions windowOptions = const WindowOptions(
     size: Size(1024, 600),
-    // center: true,
-    backgroundColor: Colors.transparent,
+    center: true,
+    backgroundColor: Color(0xFF20242D),
     skipTaskbar: false,
-    // titleBarStyle: TitleBarStyle.hidden,
+    titleBarStyle: TitleBarStyle.hidden,
   );
 
   windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();
-    // await windowManager.setFullScreen(true);
+    await windowManager.setFullScreen(true);
     await windowManager.focus();
   });
   runApp(const MyApp());
@@ -59,43 +59,43 @@ class MyApp extends StatelessWidget {
               );
             },
             child: MaterialApp(
-              title: 'Solar Monitor',
+              debugShowCheckedModeBanner: false,
               theme: ThemeData(
                 primarySwatch: Colors.blue,
               ),
-              home: const MyHomePage(title: 'Solar monitor'),
+              home: const MyHomePage(),
             )));
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const MyHomePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF20242D),
       appBar: AppBar(
-        title: Text(title),
-        actions: <Widget>[
-          Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ShowSettingsWidget()),
-                  );
-                },
-                child: const Icon(
-                  Icons.settings,
-                  size: 26.0,
-                ),
-              )),
-        ],
-      ),
+          // actions: <Widget>[
+          //   Padding(
+          //       padding: const EdgeInsets.only(right: 20.0),
+          //       child: GestureDetector(
+          //         onTap: () {
+          //           Navigator.push(
+          //             context,
+          //             MaterialPageRoute(
+          //                 builder: (context) => const ShowSettingsWidget()),
+          //           );
+          //         },
+          //         child: const Icon(
+          //           Icons.settings,
+          //           size: 26.0,
+          //         ),
+          //       )),
+          // ],
+          ),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -148,56 +148,100 @@ class MyHomePage extends StatelessWidget {
                 Expanded(
                   child: Row(
                     children: [
-                      Expanded(child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          ElevatedButton(
-                            style: null,
-                            onPressed: () => ConnectorAPI.resetPoint(),
-                            child: const Text('Reset point'),
-                          ),
-                          const SizedBox(height: 30),
-                          ElevatedButton(
-                            style: null,
-                            onPressed: () => ConnectorAPI.resetDistance(),
-                            child: const Text('Reset distance'),
-                          ),
-                        ],
-                      ),),
-                      Expanded(child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          ElevatedButton(
-                            style: null,
-                            onPressed: () => ConnectorAPI.startCompetition(),
-                            child: const Text('Start'),
-                          ),
-                          const SizedBox(height: 30),
-                          ElevatedButton(
-                            style: null,
-                            onPressed: () => ConnectorAPI.stopCompetition(),
-                            child: const Text('Stop'),
-                          ),
-                        ],
-                      ),),
-                      Expanded(child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          ElevatedButton(
-                            style: null,
-                            onPressed: () => ConnectorAPI.setLapPoint(),
-                            child: const Text('setLapPoint'),
-                          ),
-                        ],
-                      ),)
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            TelemetryButton(
+                                text: "Reset point",
+                                backgroundColor: const Color(0xFF72BBFF),
+                                onPressed: () => ConnectorAPI.resetPoint()),
+                            TelemetryButton(
+                                text: "Reset distance",
+                                backgroundColor: const Color(0xFF72BBFF),
+                                onPressed: () => ConnectorAPI.resetDistance())
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            TelemetryButton(
+                                text: "Start",
+                                backgroundColor: const Color(0xFF75FF72),
+                                onPressed: () =>
+                                    ConnectorAPI.startCompetition()),
+                            TelemetryButton(
+                                text: "Stop",
+                                backgroundColor: const Color(0xFFFF7272),
+                                onPressed: () =>
+                                    ConnectorAPI.stopCompetition()),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            TelemetryButton(
+                                text: "Set lap point",
+                                backgroundColor: const Color(0xFFFFFFFF),
+                                onPressed: () => ConnectorAPI.setLapPoint()),
+                          ],
+                        ),
+                      )
                     ],
                   ),
-                 ),
+                ),
               ],
             ),
           ),
         ],
       )),
+    );
+  }
+}
+
+class TelemetryButton extends StatelessWidget {
+  final String text;
+  final Color backgroundColor;
+  final VoidCallback onPressed;
+
+  const TelemetryButton({
+    Key? key,
+    required this.text,
+    required this.backgroundColor,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 215, // Задаем ширину кнопки
+      height: 114, // Задаем высоту кнопки
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.black,
+          // Цвет текста и иконок
+          backgroundColor: backgroundColor,
+          // Цвет фона кнопки
+          textStyle: const TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Inter', // Указываем семейство шрифтов
+          ),
+          elevation: 10,
+          // Высота тени кнопки
+          shadowColor: Colors.black,
+          // Цвет тени
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10), // Скругление углов
+          ),
+        ),
+        onPressed: onPressed, // Функция, которая будет вызвана при нажатии
+        child: Text(text), // Текст внутри кнопки
+      ),
     );
   }
 }
