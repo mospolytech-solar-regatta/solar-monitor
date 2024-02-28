@@ -12,7 +12,6 @@ import 'package:window_manager/window_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Must add this line.
   await windowManager.ensureInitialized();
 
   WindowOptions windowOptions = const WindowOptions(
@@ -49,9 +48,7 @@ class MyApp extends StatelessWidget {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: 'First Method',
-                // You can use the library anywhere in the app even in theme
                 theme: ThemeData(
-                  // primarySwatch: Colors.blue,
                   textTheme:
                       Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
                 ),
@@ -60,9 +57,7 @@ class MyApp extends StatelessWidget {
             },
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                  // primarySwatch: Colors.blue,
-                  ),
+              theme: ThemeData(),
               home: const MyHomePage(),
             )));
   }
@@ -78,118 +73,75 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFF20242D),
       appBar: AppBar(
-          actions: <Widget>[
-            Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ShowSettingsWidget()),
-                    );
-                  },
-                  child: const Icon(
-                    Icons.settings,
-                    size: 26.0,
-                  ),
-                )),
-          ],
-          ),
-      body: Center(
+        actions: <Widget>[
+          Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ShowSettingsWidget()),
+                  );
+                },
+                child: const Icon(
+                  Icons.settings,
+                  size: 26.0,
+                ),
+              )),
+        ],
+      ),
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TelemetryWidget([
-                      TelemetryProperty('motor_temp'),
-                      TelemetryProperty('motor_revols')
-                    ]),
-                  ),
-                  Expanded(
-                    child: TelemetryWidget([
-                      TelemetryProperty('MPPT_volts'),
-                      TelemetryProperty('MPPT_volts'),
-                      TelemetryProperty('time_to_go')
-                    ]),
-                  ),
-                  Expanded(
-                    child: TelemetryWidget([
-                      TelemetryProperty('controller_volts'),
-                      TelemetryProperty('controller_volts')
-                    ]),
-                  ),
-                  Expanded(
-                    child: TelemetryWidget([
-                      TelemetryProperty('position_lat'),
-                      TelemetryProperty('position_lng'),
-                      TelemetryProperty('lap_point_lat'),
-                      TelemetryProperty('lap_point_lng'),
-                    ]),
-                  ),
-                  Expanded(
-                    child: TelemetryWidget([
-                      TelemetryProperty('created_at'),
-                      TelemetryProperty('speed'),
-                      TelemetryProperty('distance_travelled')
-                    ]),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        TelemetryButton(
-                            text: "Reset point",
-                            backgroundColor: const Color(0xFF72BBFF),
-                            onPressed: () => ConnectorAPI.resetPoint()),
-                        TelemetryButton(
-                            text: "Reset distance",
-                            backgroundColor: const Color(0xFF72BBFF),
-                            onPressed: () => ConnectorAPI.resetDistance())
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        TelemetryButton(
-                            text: "Start",
-                            backgroundColor: const Color(0xFF75FF72),
-                            onPressed: () => ConnectorAPI.startCompetition()),
-                        TelemetryButton(
-                            text: "Stop",
-                            backgroundColor: const Color(0xFFFF7272),
-                            onPressed: () => ConnectorAPI.stopCompetition()),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        TelemetryButton(
-                            text: "Set lap point",
-                            backgroundColor: const Color(0xFFFFFFFF),
-                            onPressed: () => ConnectorAPI.setLapPoint()),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
+            WidgetBlock(),
+            ButtonBlock(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class WidgetBlock extends StatelessWidget {
+  const WidgetBlock({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Row(
+        children: [
+          Expanded(
+            child: TelemetryWidget([
+              TelemetryProperty('motor_temp'),
+              TelemetryProperty('controller_volts'),
+              TelemetryProperty('time_to_go'),
+            ]),
+          ),
+          Expanded(
+            child: TelemetryWidget([
+              TelemetryProperty('created_at'),
+              TelemetryProperty('distance_travelled'),
+            ]),
+          ),
+          Expanded(
+            child: TelemetryWidget([TelemetryProperty('motor_revols')]),
+          ),
+          Expanded(
+            child: TelemetryWidget([
+              TelemetryProperty('position_lat'),
+              TelemetryProperty('position_lng'),
+              TelemetryProperty('lap_point_lat'),
+              TelemetryProperty('lap_point_lng'),
+            ]),
+          ),
+          Expanded(
+            child: TelemetryWidget([
+              TelemetryProperty('speed'),
+            ]),
+          ),
+        ],
       ),
     );
   }
@@ -209,15 +161,18 @@ class TelemetryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const double width = 255 * 0.75;
+    const double height = 114 * 0.75;
+
     return SizedBox(
-      width: 215,
-      height: 114,
+      width: width, // Новая ширина
+      height: height, // Новая высота
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.black,
           backgroundColor: backgroundColor,
           textStyle: const TextStyle(
-            fontSize: 32,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
             fontFamily: 'Inter',
           ),
@@ -228,7 +183,54 @@ class TelemetryButton extends StatelessWidget {
           ),
         ),
         onPressed: onPressed,
-        child: Text(text),
+        child: Center(
+          child: Text(text),
+        ),
+      ),
+    );
+  }
+}
+
+class ButtonBlock extends StatelessWidget {
+  const ButtonBlock({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 8.0,
+        vertical: 10.0,
+      ),
+      margin: const EdgeInsets.only(
+          top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
+      decoration: BoxDecoration(
+        color: const Color(0xFF21374A),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          TelemetryButton(
+              text: "Reset point",
+              backgroundColor: const Color(0xFF72BBFF),
+              onPressed: () => ConnectorAPI.resetPoint()),
+          TelemetryButton(
+              text: "Reset distance",
+              backgroundColor: const Color(0xFF72BBFF),
+              onPressed: () => ConnectorAPI.resetDistance()),
+          TelemetryButton(
+              text: "Start",
+              backgroundColor: const Color(0xFF75FF72),
+              onPressed: () => ConnectorAPI.startCompetition()),
+          TelemetryButton(
+              text: "Stop",
+              backgroundColor: const Color(0xFFFF7272),
+              onPressed: () => ConnectorAPI.stopCompetition()),
+          TelemetryButton(
+              text: "Set lap point",
+              backgroundColor: const Color(0xFFFFFFFF),
+              onPressed: () => ConnectorAPI.setLapPoint()),
+        ],
       ),
     );
   }

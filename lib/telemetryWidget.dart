@@ -10,17 +10,15 @@ class TelemetryProperty {
 }
 
 class TelemetryWidget extends StatefulWidget {
-  List<TelemetryProperty> properties = [];
+  final List<TelemetryProperty> properties;
 
-  TelemetryWidget(this.properties, {Key? key}) : super(key: key);
+  const TelemetryWidget(this.properties, {Key? key}) : super(key: key);
 
   @override
   State<TelemetryWidget> createState() => _TelemetryWidgetState();
 }
 
 class _TelemetryWidgetState extends State<TelemetryWidget> {
-  String propertyName = '';
-
   @override
   Widget build(BuildContext context) {
     return Container(
