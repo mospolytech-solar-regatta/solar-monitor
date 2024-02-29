@@ -33,7 +33,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -47,7 +46,6 @@ class MyApp extends StatelessWidget {
             builder: (context, child) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                title: 'First Method',
                 theme: ThemeData(
                   textTheme:
                       Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
@@ -109,7 +107,7 @@ class WidgetBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Expanded( // Этот Expanded обеспечивает, что Row займет все доступное горизонтальное пространство
       child: Row(
         children: [
           Expanded(
@@ -119,27 +117,41 @@ class WidgetBlock extends StatelessWidget {
               TelemetryProperty('time_to_go'),
             ]),
           ),
-          Expanded(
-            child: TelemetryWidget([
-              TelemetryProperty('created_at'),
-              TelemetryProperty('distance_travelled'),
-            ]),
+          Expanded( // Обернуть Column в Expanded, чтобы он занимал нужное пространство в Row
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  flex: 2, // Займет двойную долю пространства по сравнению с другими Expanded виджетами
+                  child: TelemetryWidget([
+                    TelemetryProperty('created_at'),
+                    TelemetryProperty('distance_travelled'),
+                  ]),
+                ),
+                Expanded(
+                  flex: 5, // Займет одну долю пространства
+                  child: TelemetryWidget([TelemetryProperty('motor_revols')]),
+                ),
+              ],
+            ),
           ),
           Expanded(
-            child: TelemetryWidget([TelemetryProperty('motor_revols')]),
-          ),
-          Expanded(
-            child: TelemetryWidget([
-              TelemetryProperty('position_lat'),
-              TelemetryProperty('position_lng'),
-              TelemetryProperty('lap_point_lat'),
-              TelemetryProperty('lap_point_lng'),
-            ]),
-          ),
-          Expanded(
-            child: TelemetryWidget([
-              TelemetryProperty('speed'),
-            ]),
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: TelemetryWidget([
+                    TelemetryProperty('position_lat'),
+                    TelemetryProperty('position_lng'),
+                    TelemetryProperty('lap_point_lat'),
+                    TelemetryProperty('lap_point_lng'),
+                  ]),
+                ),
+                Expanded(
+                  child: TelemetryWidget([
+                    TelemetryProperty('speed'),
+                  ]),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -172,7 +184,7 @@ class TelemetryButton extends StatelessWidget {
           foregroundColor: Colors.black,
           backgroundColor: backgroundColor,
           textStyle: const TextStyle(
-            fontSize: 22,
+            fontSize: 23,
             fontWeight: FontWeight.bold,
             fontFamily: 'Inter',
           ),

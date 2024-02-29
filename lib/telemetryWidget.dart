@@ -23,7 +23,10 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints.expand(),
-      padding: const EdgeInsets.all(0),
+      // padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      margin: const EdgeInsets.symmetric(
+        horizontal: 8.0,
+        vertical: 8.0,),
       child: Card(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -37,10 +40,10 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                       return ListTile(
                         dense: true,
                         visualDensity: const VisualDensity(vertical: -4),
+                        subtitle: Text(widget.properties[index].propName,
+                            style: TextStyle(fontSize: 30.sp)),
                         title: Text(
                             '${telemetry.getProp(widget.properties[index].propName)}',
-                            style: TextStyle(fontSize: 30.sp)),
-                        subtitle: Text(widget.properties[index].propName,
                             style: TextStyle(fontSize: 30.sp)),
                       );
                     }))

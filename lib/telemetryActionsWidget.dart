@@ -14,7 +14,7 @@ class TelemetryProperty {
 class TelemetryActionsWidget extends StatefulWidget {
   String widgetName = '';
 
-  TelemetryActionsWidget(this.widgetName);
+  TelemetryActionsWidget(this.widgetName, {Key? key}) : super(key: key);
 
   @override
   State<TelemetryActionsWidget> createState() => _TelemetryActionsWidgetState();
@@ -29,7 +29,7 @@ class _TelemetryActionsWidgetState extends State<TelemetryActionsWidget> {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints.expand(),
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(10),
       child: Card(
         child: Column(
           mainAxisSize: MainAxisSize.min,
