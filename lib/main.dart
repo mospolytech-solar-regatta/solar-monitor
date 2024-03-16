@@ -9,13 +9,16 @@ import 'package:solar_monitor/showSettings.dart';
 import 'models/telemetry.dart';
 import 'telemetryWidget.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await windowManager.ensureInitialized();
 
   WindowOptions windowOptions = const WindowOptions(
-    size: Size(1024, 600),
+    size: Size(1280, 800),
     center: true,
     backgroundColor: Color(0xFF20242D),
     skipTaskbar: false,
@@ -24,7 +27,7 @@ void main() async {
 
   windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();
-    await windowManager.setFullScreen(true);
+    await windowManager.setFullScreen(false);
     await windowManager.focus();
   });
   runApp(const MyApp());
@@ -40,7 +43,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => TelemetryModel()),
         ],
         child: ScreenUtilInit(
-            designSize: const Size(1024, 600),
+            designSize: const Size(1280, 800),
             minTextAdapt: true,
             splitScreenMode: true,
             builder: (context, child) {
@@ -112,9 +115,9 @@ class WidgetBlock extends StatelessWidget {
         children: [
           Expanded(
             child: TelemetryWidget([
-              TelemetryProperty('motor_temp'),
-              TelemetryProperty('controller_volts'),
-              TelemetryProperty('time_to_go'),
+              TelemetryProperty(('motor_temp'),TextStyle(fontSize: 80.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 32.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',)),
+              TelemetryProperty(('controller_volts'),TextStyle(fontSize: 80.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 32.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',)),
+              TelemetryProperty(('time_to_go'),TextStyle(fontSize: 80.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 32.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',))
             ]),
           ),
           Expanded( // Обернуть Column в Expanded, чтобы он занимал нужное пространство в Row
@@ -123,13 +126,13 @@ class WidgetBlock extends StatelessWidget {
                 Expanded(
                   flex: 2, // Займет двойную долю пространства по сравнению с другими Expanded виджетами
                   child: TelemetryWidget([
-                    TelemetryProperty('created_at'),
-                    TelemetryProperty('distance_travelled'),
+                    TelemetryProperty(('created_at'),TextStyle(fontSize: 24.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 24.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',)),
+                    TelemetryProperty(('distance_travelled'),TextStyle(fontSize: 24.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 24.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',))
                   ]),
                 ),
                 Expanded(
                   flex: 5, // Займет одну долю пространства
-                  child: TelemetryWidget([TelemetryProperty('motor_revols')]),
+                  child: TelemetryWidget([TelemetryProperty(('motor_revols'), TextStyle(fontSize: 128.sp, color: const Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 50.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',))]),
                 ),
               ],
             ),
@@ -139,15 +142,15 @@ class WidgetBlock extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: TelemetryWidget([
-                    TelemetryProperty('position_lat'),
-                    TelemetryProperty('position_lng'),
-                    TelemetryProperty('lap_point_lat'),
-                    TelemetryProperty('lap_point_lng'),
+                    TelemetryProperty(('position_lat'), TextStyle(fontSize: 30.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 30.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',)),
+                    TelemetryProperty(('position_lng'),TextStyle(fontSize: 30.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 30.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',)),
+                    TelemetryProperty(('lap_point_lat'),TextStyle(fontSize: 30.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 30.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',)),
+                    TelemetryProperty(('lap_point_lng'),TextStyle(fontSize: 30.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 30.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',))
                   ]),
                 ),
                 Expanded(
                   child: TelemetryWidget([
-                    TelemetryProperty('speed'),
+                    TelemetryProperty(('speed'),TextStyle(fontSize: 96.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,), TextStyle(fontSize: 40.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,))
                   ]),
                 ),
               ],
@@ -173,7 +176,7 @@ class TelemetryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double width = 255 * 0.75;
+    const double width = 255 * 0.85;
     const double height = 114 * 0.75;
 
     return SizedBox(
