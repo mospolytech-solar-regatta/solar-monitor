@@ -9,23 +9,25 @@ import 'package:solar_monitor/showSettings.dart';
 import 'models/telemetry.dart';
 import 'telemetryWidget.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
-  // Must add this line.
   await windowManager.ensureInitialized();
 
-  WindowOptions windowOptions = WindowOptions(
-    size: Size(1024, 600),
-    // center: true,
-    backgroundColor: Colors.transparent,
+  WindowOptions windowOptions = const WindowOptions(
+    size: Size(1280, 800),
+    center: true,
+    backgroundColor: Color(0xFF20242D),
     skipTaskbar: false,
-    // titleBarStyle: TitleBarStyle.hidden,
+    titleBarStyle: TitleBarStyle.hidden,
   );
 
   windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();
-    // await windowManager.setFullScreen(true);
+    await windowManager.setFullScreen(false);
     await windowManager.focus();
   });
   runApp(const MyApp());
@@ -34,7 +36,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -42,16 +43,13 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => TelemetryModel()),
         ],
         child: ScreenUtilInit(
-            designSize: const Size(1024, 600),
+            designSize: const Size(1280, 800),
             minTextAdapt: true,
             splitScreenMode: true,
             builder: (context, child) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                title: 'First Method',
-                // You can use the library anywhere in the app even in theme
                 theme: ThemeData(
-                  primarySwatch: Colors.blue,
                   textTheme:
                       Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
                 ),
@@ -59,25 +57,23 @@ class MyApp extends StatelessWidget {
               );
             },
             child: MaterialApp(
-              title: 'Solar Monitor',
-              theme: ThemeData(
-                primarySwatch: Colors.blue,
-              ),
-              home: const MyHomePage(title: 'Solar monitor'),
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(),
+              home: const MyHomePage(),
             )));
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const MyHomePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF20242D),
       appBar: AppBar(
-        title: Text(title),
         actions: <Widget>[
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
@@ -96,108 +92,161 @@ class MyHomePage extends StatelessWidget {
               )),
         ],
       ),
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            WidgetBlock(),
+            ButtonBlock(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class WidgetBlock extends StatelessWidget {
+  const WidgetBlock({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded( // Этот Expanded обеспечивает, что Row займет все доступное горизонтальное пространство
+      child: Row(
         children: [
           Expanded(
-            child: Row(
-              children: [
+            child: TelemetryWidget([
+              TelemetryProperty(('motor_temp'),TextStyle(fontSize: 80.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 32.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',)),
+              TelemetryProperty(('controller_volts'),TextStyle(fontSize: 80.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 32.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',)),
+              TelemetryProperty(('time_to_go'),TextStyle(fontSize: 80.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 32.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',))
+            ]),
+          ),
+          Expanded( // Обернуть Column в Expanded, чтобы он занимал нужное пространство в Row
+            child: Column(
+              children: <Widget>[
                 Expanded(
-                  child: TelemetryWidget('Мотор', [
-                    TelemetryProperty(Icons.thermostat, 'motor_temp'),
-                    TelemetryProperty(
-                        Icons.settings_backup_restore, 'motor_revols')
+                  flex: 2, // Займет двойную долю пространства по сравнению с другими Expanded виджетами
+                  child: TelemetryWidget([
+                    TelemetryProperty(('created_at'),TextStyle(fontSize: 24.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 24.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',)),
+                    TelemetryProperty(('distance_travelled'),TextStyle(fontSize: 24.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 24.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',))
                   ]),
                 ),
                 Expanded(
-                  child: TelemetryWidget('MPPT', [
-                    TelemetryProperty(Icons.bolt, 'MPPT_volts'),
-                    TelemetryProperty(Icons.power, 'MPPT_volts'),
-                    TelemetryProperty(Icons.battery_std, 'time_to_go')
-                  ]),
-                ),
-                Expanded(
-                  child: TelemetryWidget('Контроллер', [
-                    TelemetryProperty(Icons.bolt, 'controller_volts'),
-                    TelemetryProperty(Icons.power, 'controller_volts')
-                  ]),
+                  flex: 5, // Займет одну долю пространства
+                  child: TelemetryWidget([TelemetryProperty(('motor_revols'), TextStyle(fontSize: 128.sp, color: const Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 50.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',))]),
                 ),
               ],
             ),
           ),
           Expanded(
-            child: Row(
-              children: [
+            child: Column(
+              children: <Widget>[
                 Expanded(
-                  child: TelemetryWidget('GPS', [
-                    TelemetryProperty(Icons.gps_fixed, 'position_lat'),
-                    TelemetryProperty(Icons.gps_fixed, 'position_lng'),
-                    TelemetryProperty(Icons.share_location, 'lap_point_lat'),
-                    TelemetryProperty(Icons.share_location, 'lap_point_lng'),
+                  child: TelemetryWidget([
+                    TelemetryProperty(('position_lat'), TextStyle(fontSize: 30.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 30.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',)),
+                    TelemetryProperty(('position_lng'),TextStyle(fontSize: 30.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 30.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',)),
+                    TelemetryProperty(('lap_point_lat'),TextStyle(fontSize: 30.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 30.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',)),
+                    TelemetryProperty(('lap_point_lng'),TextStyle(fontSize: 30.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 30.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',))
                   ]),
                 ),
                 Expanded(
-                  child: TelemetryWidget('Параметры', [
-                    TelemetryProperty(Icons.timer_outlined, 'created_at'),
-                    TelemetryProperty(Icons.speed, 'speed'),
-                    TelemetryProperty(
-                        Icons.social_distance, 'distance_travelled')
+                  child: TelemetryWidget([
+                    TelemetryProperty(('speed'),TextStyle(fontSize: 96.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,), TextStyle(fontSize: 40.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,))
                   ]),
                 ),
-                Expanded(
-                  child: Row(
-                    children: [
-                      Expanded(child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          ElevatedButton(
-                            style: null,
-                            onPressed: () => ConnectorAPI.resetPoint(),
-                            child: const Text('Reset point'),
-                          ),
-                          const SizedBox(height: 30),
-                          ElevatedButton(
-                            style: null,
-                            onPressed: () => ConnectorAPI.resetDistance(),
-                            child: const Text('Reset distance'),
-                          ),
-                        ],
-                      ),),
-                      Expanded(child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          ElevatedButton(
-                            style: null,
-                            onPressed: () => ConnectorAPI.startCompetition(),
-                            child: const Text('Start'),
-                          ),
-                          const SizedBox(height: 30),
-                          ElevatedButton(
-                            style: null,
-                            onPressed: () => ConnectorAPI.stopCompetition(),
-                            child: const Text('Stop'),
-                          ),
-                        ],
-                      ),),
-                      Expanded(child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          ElevatedButton(
-                            style: null,
-                            onPressed: () => ConnectorAPI.setLapPoint(),
-                            child: const Text('setLapPoint'),
-                          ),
-                        ],
-                      ),)
-                    ],
-                  ),
-                 ),
               ],
             ),
           ),
         ],
-      )),
+      ),
+    );
+  }
+}
+
+class TelemetryButton extends StatelessWidget {
+  final String text;
+  final Color backgroundColor;
+  final VoidCallback onPressed;
+
+  const TelemetryButton({
+    Key? key,
+    required this.text,
+    required this.backgroundColor,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    const double width = 255 * 0.85;
+    const double height = 114 * 0.75;
+
+    return SizedBox(
+      width: width, // Новая ширина
+      height: height, // Новая высота
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.black,
+          backgroundColor: backgroundColor,
+          textStyle: const TextStyle(
+            fontSize: 23,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Inter',
+          ),
+          elevation: 10,
+          shadowColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        onPressed: onPressed,
+        child: Center(
+          child: Text(text),
+        ),
+      ),
+    );
+  }
+}
+
+class ButtonBlock extends StatelessWidget {
+  const ButtonBlock({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 8.0,
+        vertical: 10.0,
+      ),
+      margin: const EdgeInsets.only(
+          top: 10.0, bottom: 10.0, left: 10.0, right: 10.0),
+      decoration: BoxDecoration(
+        color: const Color(0xFF21374A),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          TelemetryButton(
+              text: "Reset point",
+              backgroundColor: const Color(0xFF72BBFF),
+              onPressed: () => ConnectorAPI.resetPoint()),
+          TelemetryButton(
+              text: "Reset distance",
+              backgroundColor: const Color(0xFF72BBFF),
+              onPressed: () => ConnectorAPI.resetDistance()),
+          TelemetryButton(
+              text: "Start",
+              backgroundColor: const Color(0xFF75FF72),
+              onPressed: () => ConnectorAPI.startCompetition()),
+          TelemetryButton(
+              text: "Stop",
+              backgroundColor: const Color(0xFFFF7272),
+              onPressed: () => ConnectorAPI.stopCompetition()),
+          TelemetryButton(
+              text: "Set lap point",
+              backgroundColor: const Color(0xFFFFFFFF),
+              onPressed: () => ConnectorAPI.setLapPoint()),
+        ],
+      ),
     );
   }
 }

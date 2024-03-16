@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 import 'package:json_annotation/json_annotation.dart';
+import 'package:intl/intl.dart';
 
 part 'dataModels.g.dart';
 
@@ -47,8 +48,12 @@ class TelemetryMetric {
 
   dynamic getProp(String name) {
     var model = toJson();
+    if (name == 'created_at') {
+      return DateFormat('hh:mm:ss.SSS').format(createdAt);
+    }
     return model[name];
   }
+
 
   factory TelemetryMetric.fromJson(Map<String, dynamic> json) =>
       _$TelemetryMetricFromJson(json);
