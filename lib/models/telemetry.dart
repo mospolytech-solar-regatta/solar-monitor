@@ -20,7 +20,7 @@ class TelemetryModel extends ChangeNotifier {
 
   TelemetryModel() {
     Timer timer =
-        Timer.periodic(Duration(seconds: 15), (Timer t) => updateData());
+        Timer.periodic(const Duration(seconds: 5), (Timer t) => updateData());
     store = BoatConnector();
     updateData();
     getSettings();

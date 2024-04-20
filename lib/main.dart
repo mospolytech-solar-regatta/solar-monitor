@@ -18,11 +18,10 @@ void main() async {
   await windowManager.ensureInitialized();
 
   WindowOptions windowOptions = const WindowOptions(
-    size: Size(1280, 800),
-    center: true,
     backgroundColor: Color(0xFF20242D),
-    skipTaskbar: false,
+    skipTaskbar: true,
     titleBarStyle: TitleBarStyle.hidden,
+    fullScreen: true,
   );
 
   windowManager.waitUntilReadyToShow(windowOptions, () async {
@@ -71,28 +70,9 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF20242D),
-      appBar: AppBar(
-        actions: <Widget>[
-          Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ShowSettingsWidget()),
-                  );
-                },
-                child: const Icon(
-                  Icons.settings,
-                  size: 26.0,
-                ),
-              )),
-        ],
-      ),
-      body: const Center(
+    return const Scaffold(
+      backgroundColor: Color(0xFF20242D),
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -110,7 +90,7 @@ class WidgetBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded( // Этот Expanded обеспечивает, что Row займет все доступное горизонтальное пространство
+    return Expanded(
       child: Row(
         children: [
           Expanded(
@@ -120,18 +100,18 @@ class WidgetBlock extends StatelessWidget {
               TelemetryProperty(('time_to_go'),TextStyle(fontSize: 80.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 32.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',))
             ]),
           ),
-          Expanded( // Обернуть Column в Expanded, чтобы он занимал нужное пространство в Row
+          Expanded(
             child: Column(
               children: <Widget>[
                 Expanded(
-                  flex: 2, // Займет двойную долю пространства по сравнению с другими Expanded виджетами
+                  flex: 2,
                   child: TelemetryWidget([
                     TelemetryProperty(('created_at'),TextStyle(fontSize: 24.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 24.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',)),
                     TelemetryProperty(('distance_travelled'),TextStyle(fontSize: 24.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 24.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',))
                   ]),
                 ),
                 Expanded(
-                  flex: 5, // Займет одну долю пространства
+                  flex: 5,
                   child: TelemetryWidget([TelemetryProperty(('motor_revols'), TextStyle(fontSize: 128.sp, color: const Color(0xFFFFFFFF),fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 50.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',))]),
                 ),
               ],

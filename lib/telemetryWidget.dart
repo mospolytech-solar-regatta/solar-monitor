@@ -9,11 +9,11 @@ final Map<String, String> propertyTitleMap = {
   'time_to_go': 'time to go',
   'motor_revols': 'revolutions'
 };
+
 class TelemetryProperty {
   String propName;
   TextStyle textStyle;
   TextStyle titleStyle;
-
 
   TelemetryProperty(this.propName, this.textStyle, this.titleStyle);
 }
@@ -34,9 +34,10 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
       constraints: const BoxConstraints.expand(),
       margin: const EdgeInsets.symmetric(
         horizontal: 8.0,
-        vertical: 8.0,),
+        vertical: 8.0,
+      ),
       child: Card(
-        color: const Color(0xFF21374A), // обновить цвет фона
+        color: const Color(0xFF21374A),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -144,8 +145,6 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                           );
                           break;
 
-
-
                         case 'speed':
                           subtitle = Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -202,11 +201,13 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                               Row(
                                 children: [
                                   Image.asset(
-                                    'assets/images/temp.png', // путь к изображению
+                                    'assets/images/temp.png',
+                                    // путь к изображению
                                     width: 85.w,
                                     height: 136.h,
                                   ),
-                                  SizedBox(width: 25.w), // Добавьте отступ между картинкой и текстом
+                                  SizedBox(width: 25.w),
+                                  // Добавьте отступ между картинкой и текстом
                                   Text(
                                     '$value',
                                     style: textStyle,
@@ -215,8 +216,10 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                                 ],
                               ),
                               Positioned(
-                                left: 230.w, // Позиция слева от левого края Row
-                                bottom: 18, // Позиция снизу на 10 пикселей
+                                left: 230.w,
+                                // Позиция слева от левого края Row
+                                bottom: 20,
+                                // Позиция снизу на 10 пикселей
                                 child: Text(
                                   '°C',
                                   style: TextStyle(
@@ -229,17 +232,19 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                             ],
                           );
                           break;
-                          case 'controller_volts':
+                        case 'controller_volts':
                           subtitle = Stack(
                             children: [
                               Row(
                                 children: [
                                   Image.asset(
-                                    'assets/images/controller.png', // путь к изображению
+                                    'assets/images/controller.png',
+                                    // путь к изображению
                                     width: 93.w,
                                     height: 93.h,
                                   ),
-                                  SizedBox(width: 15.w), // Добавьте отступ между картинкой и текстом
+                                  SizedBox(width: 15.w),
+                                  // Добавьте отступ между картинкой и текстом
                                   Text(
                                     '$value',
                                     style: textStyle,
@@ -248,8 +253,10 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                                 ],
                               ),
                               Positioned(
-                                left: 225.w, // Позиция слева от левого края Row
-                                bottom: 10, // Позиция снизу на 10 пикселей
+                                left: 225.w,
+                                // Позиция слева от левого края Row
+                                bottom: 10,
+                                // Позиция снизу на 10 пикселей
                                 child: Text(
                                   'B',
                                   style: TextStyle(
@@ -261,17 +268,20 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                               ),
                             ],
                           );
-                          break; case 'time_to_go':
+                          break;
+                        case 'time_to_go':
                           subtitle = Stack(
                             children: [
                               Row(
                                 children: [
                                   Image.asset(
-                                    'assets/images/batary.png', // путь к изображению
+                                    'assets/images/batary.png',
+                                    // путь к изображению
                                     width: 108.w,
                                     height: 105.h,
                                   ),
-                                  SizedBox(width: 15.w), // Добавьте отступ между картинкой и текстом
+                                  SizedBox(width: 15.w),
+                                  // Добавьте отступ между картинкой и текстом
                                   Text(
                                     '$value',
                                     style: textStyle,
@@ -280,8 +290,10 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                                 ],
                               ),
                               Positioned(
-                                left: 240.w, // Позиция слева от левого края Row
-                                bottom: 10, // Позиция снизу на 10 пикселей
+                                left: 240.w,
+                                // Позиция слева от левого края Row
+                                bottom: 10,
+                                // Позиция снизу на 10 пикселей
                                 child: Text(
                                   'Min',
                                   style: TextStyle(
@@ -295,9 +307,6 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                           );
                           break;
 
-
-
-
                         default:
                           subtitle = Text(
                             '$value',
@@ -310,30 +319,32 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                         visualDensity: const VisualDensity(vertical: -4),
                         title: propName == 'position_lat'
                             ? Center(
-                          child: Text(
-                            'GPS',
-                            style: titleStyle,
-                          ),
-                        )
+                                child: Text(
+                                  'GPS',
+                                  style: titleStyle,
+                                ),
+                              )
                             : propName == 'created_at'
-                            ? Center(
-                          child: Text(
-                            'parameters',
-                            style: titleStyle,
-                          ),
-                        )
-                            : propName != 'position_lng' && propName != 'lap_point_lat' && propName != 'lap_point_lng' && propName != 'distance_travelled'
-                            ? Center(
-                          child: Text(
-                            propertyTitleMap[propName] ?? propName,
-                            style: titleStyle,
-                          ),
-                        )
-                            : null,
+                                ? Center(
+                                    child: Text(
+                                      'parameters',
+                                      style: titleStyle,
+                                    ),
+                                  )
+                                : propName != 'position_lng' &&
+                                        propName != 'lap_point_lat' &&
+                                        propName != 'lap_point_lng' &&
+                                        propName != 'distance_travelled'
+                                    ? Center(
+                                        child: Text(
+                                          propertyTitleMap[propName] ??
+                                              propName,
+                                          style: titleStyle,
+                                        ),
+                                      )
+                                    : null,
                         subtitle: Center(child: subtitle),
                       );
-
-
                     }))
           ],
         ),
@@ -341,4 +352,3 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
     );
   }
 }
-
