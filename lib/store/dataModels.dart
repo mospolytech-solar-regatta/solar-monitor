@@ -51,6 +51,12 @@ class TelemetryMetric {
     if (name == 'created_at') {
       return DateFormat('hh:mm:ss.SSS').format(createdAt);
     }
+    if (name == 'distance_travelled') {
+      return distanceTravelled.toStringAsFixed(1);
+    }
+    if (name == 'motor_temp') {
+      return motorTemp.toStringAsFixed(1);
+    }
     return model[name];
   }
 
