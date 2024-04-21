@@ -156,7 +156,7 @@ class TelemetryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double width = 255 * 0.85;
+    const double width = 220 * 0.85;
     const double height = 114 * 0.75;
 
     return SizedBox(
