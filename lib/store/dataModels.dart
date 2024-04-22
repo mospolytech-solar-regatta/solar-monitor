@@ -57,6 +57,9 @@ class TelemetryMetric {
     if (name == 'motor_temp') {
       return motorTemp.toStringAsFixed(1);
     }
+    if (name == 'speed') {
+      return speed.toStringAsFixed(1);
+    }
     return model[name];
   }
 

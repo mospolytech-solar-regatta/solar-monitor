@@ -144,7 +144,6 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                             ],
                           );
                           break;
-
                         case 'speed':
                           subtitle = Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -194,7 +193,6 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                             ],
                           );
                           break;
-
                         case 'motor_temp':
                           subtitle = Stack(
                             children: [
@@ -216,10 +214,8 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                                 ],
                               ),
                               Positioned(
-                                left: 230.w,
-                                // Позиция слева от левого края Row
-                                bottom: 20,
-                                // Позиция снизу на 10 пикселей
+                                left: 290.w,
+                                bottom: 25,
                                 child: Text(
                                   '°C',
                                   style: TextStyle(
@@ -239,12 +235,10 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                                 children: [
                                   Image.asset(
                                     'assets/images/controller.png',
-                                    // путь к изображению
                                     width: 93.w,
                                     height: 93.h,
                                   ),
                                   SizedBox(width: 15.w),
-                                  // Добавьте отступ между картинкой и текстом
                                   Text(
                                     '$value',
                                     style: textStyle,
@@ -253,10 +247,8 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                                 ],
                               ),
                               Positioned(
-                                left: 225.w,
-                                // Позиция слева от левого края Row
+                                left: 290.w,
                                 bottom: 10,
-                                // Позиция снизу на 10 пикселей
                                 child: Text(
                                   'B',
                                   style: TextStyle(
@@ -276,12 +268,10 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                                 children: [
                                   Image.asset(
                                     'assets/images/batary.png',
-                                    // путь к изображению
                                     width: 108.w,
                                     height: 105.h,
                                   ),
                                   SizedBox(width: 15.w),
-                                  // Добавьте отступ между картинкой и текстом
                                   Text(
                                     '$value',
                                     style: textStyle,
@@ -290,10 +280,8 @@ class _TelemetryWidgetState extends State<TelemetryWidget> {
                                 ],
                               ),
                               Positioned(
-                                left: 240.w,
-                                // Позиция слева от левого края Row
+                                left: 290.w,
                                 bottom: 10,
-                                // Позиция снизу на 10 пикселей
                                 child: Text(
                                   'Min',
                                   style: TextStyle(

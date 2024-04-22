@@ -121,6 +121,7 @@ class WidgetBlock extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Expanded(
+                  flex: 5,
                   child: TelemetryWidget([
                     TelemetryProperty(('position_lat'), TextStyle(fontSize: 30.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 30.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',)),
                     TelemetryProperty(('position_lng'),TextStyle(fontSize: 30.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',), TextStyle(fontSize: 30.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,fontFamily: 'Inter',)),
@@ -129,6 +130,7 @@ class WidgetBlock extends StatelessWidget {
                   ]),
                 ),
                 Expanded(
+                  flex: 4,
                   child: TelemetryWidget([
                     TelemetryProperty(('speed'),TextStyle(fontSize: 96.sp, color: const Color(0xFFFFFFFF), fontWeight: FontWeight.bold,), TextStyle(fontSize: 40.sp, color: const Color(0xFF72BBFF), fontWeight: FontWeight.bold,))
                   ]),
@@ -156,7 +158,7 @@ class TelemetryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double width = 255 * 0.85;
+    const double width = 220 * 0.85;
     const double height = 114 * 0.75;
 
     return SizedBox(
